@@ -1,0 +1,37 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+   http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context-4.2.xsd
+">
+    <context:property-placeholder location="/config.properties"/>
+    <bean id="cmnDataLoader" class="me.azno.games.sk2.data.CmnDataLoader">
+        <constructor-arg value="${root_path}"/>
+        <constructor-arg value="${file_cmndata}"/>
+        <property name="itemsParser" ref="cmnItemsParser"/>
+        <property name="featuresParser" ref="cmnFeaturesParser"/>
+        <property name="regionsParser" ref="cmnRegionsParser"/>
+        <property name="fortsParser" ref="cmnFortsParser"/>
+        <property name="HerosParser" ref="cmnHerosParser"/>
+    </bean>
+
+    <bean id="cmnItemsParser" class="me.azno.games.sk2.data.parser.cmn.ItemListParser">
+        <property name="effectsParser" ref="cmnEffectsParser"/>
+    </bean>
+    <bean id="cmnEffectsParser" class="me.azno.games.sk2.data.parser.cmn.EffectListParser"/>
+    <bean id="cmnFeaturesParser" class="me.azno.games.sk2.data.parser.cmn.FeatureListParser"/>
+    <bean id="cmnRegionsParser" class="me.azno.games.sk2.data.parser.cmn.RegionsListParser">
+        <property name="neighborsParser" ref="cmnNeighborsParser"/>
+    </bean>
+    <bean id="cmnNeighborsParser" class="me.azno.games.sk2.data.parser.cmn.NeighborListParser"/>
+    <bean id="cmnFortsParser" class="me.azno.games.sk2.data.parser.cmn.FortListParser"/>
+    <bean id="cmnHerosParser" class="me.azno.games.sk2.data.parser.cmn.HeroListParser">
+        <property name="featuresParser" ref="cmnHeroFeaturesParser"/>
+    </bean>
+    <bean id="cmnHeroFeaturesParser" class="me.azno.games.sk2.data.parser.cmn.HeroFeatureListParser"/>
+
+</beans>
